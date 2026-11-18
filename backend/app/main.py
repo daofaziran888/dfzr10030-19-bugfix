@@ -10,6 +10,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.routers import ROUTERS
+from app.services.topology import topology_state
+from app.services.transform import transform_service
 from app.store import store
 
 app = FastAPI(title="多源数据采集与RPA自动化平台", version="1.0.0")
@@ -21,6 +23,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.on_event("startup")
+def build_initial_snapshot() -> None:
+    """启动即按流转管道声明构建首版 DAG 快照，并让转换服务同步待确认台账。"""
+    topology_state.rebuild(reason="服务启动，按流转管道声明构建首版 DAG 快照")
+    transform_service.sync_snapshot()
+
 
 for module in ROUTERS:
     app.include_router(module.router)

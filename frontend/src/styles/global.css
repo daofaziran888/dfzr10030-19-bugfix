@@ -44,10 +44,58 @@ body { margin: 0; background: #f6f8fb; color: #1f2937; }
 .dag-node { cursor: grab; transition: stroke 0.15s; }
 .dag-node text { font-size: 12px; fill: #1f2937; }
 .dag-node.selected rect { stroke: var(--brand); stroke-width: 2; }
+.dag-node.isolated { cursor: pointer; }
 .dag-edge { stroke: #94a3b8; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
-.dag-detail { border-top: 1px solid var(--border); padding: 12px; background: #fafbfc; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.dag-edge.edge-active { stroke: #16a34a; stroke-width: 2; }
+.dag-edge.edge-isolated { stroke-dasharray: 5 4; opacity: 0.75; }
+.dag-detail { border-top: 1px solid var(--border); padding: 12px; background: #fafbfc; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; border-radius: 8px; }
 .dag-detail dt { font-size: 12px; color: var(--muted); }
 .dag-detail dd { font-size: 13px; margin: 0 0 8px 0; }
+.dag-detail .full-line { grid-column: 1 / -1; }
+.detail-close { margin-top: 4px; }
+/* 流转 DAG 快照与拓扑清单 */
+.snapshot-bar { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--brand); border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; }
+.snapshot-meta { display: flex; flex-direction: column; gap: 2px; font-size: 13px; }
+.snapshot-meta strong { font-size: 14px; }
+.prev-summary { color: var(--muted); font-style: normal; font-size: 12px; }
+.readonly-tag { color: #b45309; font-style: normal; font-size: 12px; }
+.snapshot-tools { display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; }
+.policy-pick { display: flex; flex-direction: column; font-size: 12px; color: var(--muted); gap: 4px; }
+.policy-pick select { padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; min-width: 260px; }
+.reason-input { padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; min-width: 200px; }
+.topo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 12px 0; }
+.topo-card, .pipe-panel { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+.topo-card h4, .pipe-panel h4 { margin: 0 0 10px; font-size: 14px; }
+.topo-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.topo-list li { display: flex; align-items: center; gap: 8px; font-size: 13px; flex-wrap: wrap; }
+.topo-text { flex: 1; min-width: 160px; }
+.edge-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dot-on { background: #16a34a; }
+.dot-off { background: #cbd5e1; }
+.edge-tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.tag-on { background: #dcfce7; color: #15803d; }
+.tag-off { background: #fee2e2; color: #b91c1c; }
+.edge-chip { display: inline-block; font-size: 12px; padding: 3px 8px; border-radius: 10px; margin: 2px 4px 2px 0; }
+.chip-on { background: #dcfce7; color: #15803d; }
+.chip-off { background: #f1f5f9; color: #64748b; }
+.iso-reason { color: var(--muted); font-size: 12px; }
+.pipe-panel { margin-bottom: 12px; }
+.chain-cell, .expr-cell { font-size: 12px; color: #334155; }
+.status-badge { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 12px; }
+.st-草稿 { background: #e2e8f0; color: #475569; }
+.st-待校验 { background: #fef3c7; color: #b45309; }
+.st-已启用 { background: #d1fae5; color: #047857; }
+.st-已停用 { background: #fee2e2; color: #b91c1c; }
+.snap-tag { font-size: 11px; color: var(--muted); margin-left: 6px; }
+.action-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.history-list { list-style: none; margin: 6px 0 0; padding: 8px; background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; font-size: 12px; max-width: 360px; }
+.history-list li { padding: 3px 0; border-bottom: 1px dashed #e2e8f0; }
+.history-list em { color: var(--brand); font-style: normal; }
+.row-isolated { background: #f8fafc; }
+.review-bar { display: flex; gap: 10px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+.review-pick { font-size: 13px; margin-right: 8px; white-space: nowrap; }
+.muted { color: var(--muted); font-size: 12px; }
+.ok-text { color: #047857; }
 /* 时间线 */
 .timeline-wrap { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 12px; overflow-x: auto; }
 .timeline-row { display: flex; align-items: center; margin-bottom: 8px; padding: 4px 0; border-bottom: 1px solid #f0f2f5; }
